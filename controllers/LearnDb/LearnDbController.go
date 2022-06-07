@@ -2,18 +2,19 @@ package LearnDb
 
 import (
 	"github.com/gin-gonic/gin"
+	"learn-gin/models"
 	"net/http"
 )
 
-/*
-go get -u gorm.io/gorm && go get -u gorm.io/driver/sqlite
-
-*/
 type LearnDatabaseController struct{}
 
 func (a LearnDatabaseController) Query(context *gin.Context) {
+
+	var userList []models.User
+	//models.DB.Debug().Find(&userList)
+	models.DB.Debug().Where("name = ?", "demo02").Find(&userList)
 	context.JSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "查询功能",
+		"message": userList,
 	})
 }
